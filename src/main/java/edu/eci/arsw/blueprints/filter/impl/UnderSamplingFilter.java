@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class underSamplingFilter implements Filter {
+public class UnderSamplingFilter implements Filter {
     @Override
     public Blueprint filterPoints(Blueprint blueprint) {
         blueprint.setPoints(suppressInterleated(blueprint.getPoints()));

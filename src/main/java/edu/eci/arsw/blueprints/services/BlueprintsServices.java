@@ -5,12 +5,12 @@
  */
 package edu.eci.arsw.blueprints.services;
 
+import edu.eci.arsw.blueprints.filter.Filter;
 import edu.eci.arsw.blueprints.model.Blueprint;
-import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
+import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
-import java.util.LinkedHashMap;
-import java.util.Map;
+
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,16 +21,24 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class BlueprintsServices {
-   
+
+    private final BlueprintsPersistence bpp;
+
+    private final Filter filter;
+
     @Autowired
-    BlueprintsPersistence bpp=null;
+    public BlueprintsServices(BlueprintsPersistence bpp, Filter filter) {
+        this.bpp = bpp;
+        this.filter = filter;
+    }
+
     
-    public void addNewBlueprint(Blueprint bp){
-        
+    public void addNewBlueprint(Blueprint bp) throws BlueprintPersistenceException {
+        bpp.saveBlueprint(bp);
     }
     
     public Set<Blueprint> getAllBlueprints(){
-        return null;
+        return bpp.getBlueprints();
     }
     
     /**
@@ -41,7 +49,11 @@ public class BlueprintsServices {
      * @throws BlueprintNotFoundException if there is no such blueprint
      */
     public Blueprint getBlueprint(String author,String name) throws BlueprintNotFoundException{
-        throw new UnsupportedOperationException("Not supported yet."); 
+        return bpp.getBlueprint(author,name);
+    }
+
+    public Blueprint filterBlueprint(Blueprint blueprint){
+        return filter.filterPoints(blueprint);
     }
     
     /**
@@ -51,7 +63,13 @@ public class BlueprintsServices {
      * @throws BlueprintNotFoundException if the given author doesn't exist
      */
     public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException{
-        throw new UnsupportedOperationException("Not supported yet."); 
+        try {
+            Set<Blueprint> blueprints = bpp.getBlueprintsByAuthor(author);
+            return blueprints;
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return null;
     }
     
 }

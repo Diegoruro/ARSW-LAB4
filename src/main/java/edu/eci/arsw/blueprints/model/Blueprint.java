@@ -22,6 +22,7 @@ public class Blueprint {
     }
          
     public Blueprint(String author, String name){
+        this.author = author;
         this.name=name;
         points=new ArrayList<>();
     }
@@ -40,7 +41,11 @@ public class Blueprint {
     public List<Point> getPoints() {
         return points;
     }
-    
+
+    public void setPoints(List<Point> points) {
+        this.points = points;
+    }
+
     public void addPoint(Point p){
         this.points.add(p);
     }

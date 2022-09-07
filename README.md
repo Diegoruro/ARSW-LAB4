@@ -2,6 +2,8 @@
 
 ## Arquitecturas de Software
 
+## Juan Aguas - Diego Ruiz
+
 # Componentes y conectores - Parte I.
 
 El ejercicio se debe traer terminado para el siguiente laboratorio (Parte II).
